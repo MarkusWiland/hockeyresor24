@@ -1,26 +1,172 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tw-animate-css";
+
+@custom_variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-hero-background: hsl(var(--hero-background));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-text-primary: hsl(var(--text-primary));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop {
+    border-color: var(--color-gray-200, currentColor);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .card-3d {
+    @apply transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01];
+  }
+}
+
+:root {
+  /* === Base === */
+  --background: 210 35% 95%; /* Ljus isblå bakgrund */
+  --foreground: 220 25% 15%; /* Mörk stålblå text */
+
+  /* === Surfaces === */
+  --hero-background: 215 20% 22%;
+
+  --card: 0 0% 100%; /* Vit kortbakgrund */
+  --card-foreground: 220 20% 15%; /* Stålgrå text på kort */
+
+  --popover: 210 25% 98%; /* Nästan vit med en hint av blått */
+  --popover-foreground: 220 20% 20%;
+
+  /* === Primary CTA (Pris, knappar, ikoner) === */
+  --primary: 0 85% 55%; /* Röd - energisk och tydlig */
+  --primary-foreground: 0 0% 100%; /* Vit text på CTA */
+
+  /* === Secondary (för t.ex. badge, lätt bakgrund) === */
+  --secondary: 210 20% 90%; /* Ljus isgrå/blå */
+  --secondary-foreground: 220 15% 20%;
+
+  /* === Accent (t.ex. för highlights, hover) === */
+  --accent: 200 100% 60%; /* Klar isblå */
+  --accent-foreground: 220 100% 10%; /* Nästan svart text */
+
+  /* === Muted (metadata, hjälptext etc.) === */
+  --muted: 210 15% 88%; /* Väldigt ljus gråblå */
+  --muted-foreground: 215 10% 35%; /* Mjuk gråblå text */
+
+  /* === Border / Inputs === */
+  --border: 210 10% 80%;
+  --input: 210 10% 80%;
+  --ring: 0 85% 55%; /* Samma som primary */
+
+  /* === Status colors === */
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 0 0% 100%;
+
+  --success: 140 50% 45%;
+  --success-foreground: 140 100% 98%;
+
+  --warning: 40 100% 55%;
+  --warning-foreground: 40 100% 10%;
+
+  /* === Radii === */
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl xl:text-7xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl lg:text-3xl font-medium;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-4xl font-medium;
+  }
+
+  a {
+    @apply hover:cursor-pointer;
+  }
+
+  button {
+    @apply hover:cursor-pointer bg-rose-600 hover:bg-rose-700;
+  }
+}
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+
+  @media (width >= 1400px) {
+    max-width: 1200px;
+  }
+}
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-size: 200% 100%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 100%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
 }
